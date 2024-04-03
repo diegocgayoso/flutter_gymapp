@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "916476343485",
+    "project_id": "flutter-gymapp-56d7a",
+    "storage_bucket": "flutter-gymapp-56d7a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916476343485:android:3f797504b495edb9a133d4",
+        "android_client_info": {
+          "package_name": "gayoso.diego.flutter_my_first_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCagLps5xFy4VM3S3fpmbIxny2XTUCaQDM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
