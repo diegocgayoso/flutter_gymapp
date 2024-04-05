@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_my_first_app/_core/components/decoration_auth_field.dart';
 import 'package:flutter_my_first_app/_core/my_colors.dart';
+import 'package:flutter_my_first_app/services/auth_service.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -13,6 +14,11 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   bool wantIn = true;
   final _formKey = GlobalKey<FormState>();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+
+  AuthenticationService _authService = AuthenticationService();
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +29,9 @@ class _AuthScreenState extends State<AuthScreen> {
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [MyColors.blueBottomGradient, MyColors.blueGradient],
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [MyColors.pink01, MyColors.purple01, MyColors.blue01],
               ),
             ),
           ),
@@ -40,7 +46,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Image.asset(
-                        "assets/gaming.jpg",
+                        "assets/logo-gym.png",
                         height: 128,
                       ),
                       const Text(
@@ -55,6 +61,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         height: 32,
                       ),
                       TextFormField(
+                        controller: _emailController,
                         decoration: getAuthInputDecoration("Email"),
                         validator: (String? value) {
                           if (value == null) {
@@ -71,6 +78,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                       const SizedBox(height: 12),
                       TextFormField(
+                        controller: _passwordController,
                         decoration: getAuthInputDecoration("Senha"),
                         validator: (String? value) {
                           if (value == null) {
@@ -89,6 +97,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           child: Column(
                             children: [
                               TextFormField(
+                                controller: _passwordController,
                                 decoration: getAuthInputDecoration(
                                     "Confirme sua senha"),
                                 validator: (String? value) {
@@ -100,15 +109,17 @@ class _AuthScreenState extends State<AuthScreen> {
                                   }
                                   return null;
                                 },
+                                obscureText: true,
                               ),
                               const SizedBox(height: 12),
                               TextFormField(
+                                controller: _nameController,
                                 decoration: getAuthInputDecoration("Nome"),
                                 validator: (String? value) {
                                   if (value == null) {
                                     return "nome muito curto";
                                   }
-                                  if (value!.length < 5) {
+                                  if (value.length < 5) {
                                     return "nome muito curto";
                                   }
                                   // O null
@@ -148,8 +159,20 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   buttonPrincipalClicado() {
+    String name = _nameController.text;
+    String email = _emailController.text;
+    String password = _nameController.text;
+
     if (_formKey.currentState!.validate()) {
       print("Form valido");
+      if (wantIn) {
+        print('Entrada validada');
+      } else {
+        print('Cadrastro Validado ');
+        print(
+            '${_emailController.text}, ${_passwordController.text}, ${_nameController.text}');
+        _authService.registerUser(name: name, email: email, password: password);
+      }
     } else {
       print("invalido");
     }
