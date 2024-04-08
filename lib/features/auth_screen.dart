@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_my_first_app/_core/components/decoration_auth_field.dart';
+import 'package:flutter_my_first_app/_core/components/my_snackbar.dart';
 import 'package:flutter_my_first_app/_core/my_colors.dart';
 import 'package:flutter_my_first_app/services/auth_service.dart';
 
@@ -135,7 +136,9 @@ class _AuthScreenState extends State<AuthScreen> {
                         onPressed: () {
                           buttonPrincipalClicado();
                         },
-                        child: Text((wantIn) ? 'Entrar' : 'Cadastrar'),
+                        child: Text(
+                          (wantIn) ? 'Entrar' : 'Cadastrar',
+                        ),
                       ),
                       Divider(),
                       TextButton(
@@ -144,9 +147,10 @@ class _AuthScreenState extends State<AuthScreen> {
                               wantIn = !wantIn;
                             });
                           },
-                          child: Text((wantIn)
-                              ? "Quero me cadastrar."
-                              : "Quero entrar"))
+                          child: Text(
+                            (wantIn) ? "Quero me cadastrar." : "Quero entrar",
+                            style: TextStyle(color: Colors.grey[300]),
+                          ))
                     ],
                   ),
                 ),
@@ -161,17 +165,29 @@ class _AuthScreenState extends State<AuthScreen> {
   buttonPrincipalClicado() {
     String name = _nameController.text;
     String email = _emailController.text;
-    String password = _nameController.text;
+    String password = _passwordController.text;
 
     if (_formKey.currentState!.validate()) {
-      print("Form valido");
       if (wantIn) {
         print('Entrada validada');
       } else {
         print('Cadrastro Validado ');
         print(
-            '${_emailController.text}, ${_passwordController.text}, ${_nameController.text}');
-        _authService.registerUser(name: name, email: email, password: password);
+            '${_emailController.text}, ${_passwordController.text}, ${_nameController.text},');
+        _authService
+            .registerUser(name: name, email: email, password: password)
+            .then((String? err) {
+          if (err != null) {
+            // Voltou com erro
+            showSnackBar(context: context, text: err);
+          } else {
+            // Deu bom
+            showSnackBar(
+                context: context,
+                text: "Cadastro efetuado com sucesso",
+                isErr: false);
+          }
+        });
       }
     } else {
       print("invalido");
