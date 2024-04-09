@@ -170,6 +170,13 @@ class _AuthScreenState extends State<AuthScreen> {
     if (_formKey.currentState!.validate()) {
       if (wantIn) {
         print('Entrada validada');
+        _authService
+            .loginUsers(email: email, password: password)
+            .then((String? erro) {
+          if (erro != null) {
+            showSnackBar(context: context, text: erro);
+          }
+        });
       } else {
         print('Cadrastro Validado ');
         print(
@@ -180,12 +187,6 @@ class _AuthScreenState extends State<AuthScreen> {
           if (err != null) {
             // Voltou com erro
             showSnackBar(context: context, text: err);
-          } else {
-            // Deu bom
-            showSnackBar(
-                context: context,
-                text: "Cadastro efetuado com sucesso",
-                isErr: false);
           }
         });
       }

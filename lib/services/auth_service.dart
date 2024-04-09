@@ -26,4 +26,19 @@ class AuthenticationService {
       return "erro ${err.code}";
     }
   }
+
+  Future<String?> loginUsers(
+      {required String email, required String password}) async {
+    try {
+      await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
+      return null;
+    } on FirebaseAuthException catch (err) {
+      return err.message;
+    }
+  }
+
+  Future<void> logoutUsers() async {
+    return _firebaseAuth.signOut();
+  }
 }

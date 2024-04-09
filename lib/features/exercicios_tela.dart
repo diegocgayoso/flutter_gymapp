@@ -5,14 +5,9 @@ import 'package:flutter_my_first_app/models/sentimento_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ExercicioTela extends StatelessWidget {
-  ExercicioTela({super.key});
+  final ExercicioModel exercicioModel;
+  ExercicioTela({super.key, required this.exercicioModel});
 
-  final ExercicioModel exercicioModel = ExercicioModel(
-      id: "EX001",
-      name: 'Supino Inclinado com Halteres',
-      treino: "Peito",
-      comoFazer:
-          "Halteres empurrando pra cima sentadio no banco no angulo de 45 graus");
   final List<SentimentoModel> listaSentimentos = [
     SentimentoModel(
         id: "SE001",
